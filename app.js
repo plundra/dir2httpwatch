@@ -12,8 +12,6 @@ var fs     = require("fs");
 
 /* Some global storage */
 var files   = [];
-var clients = [];
-
 
 /* Request handler */
 function handler (req, res) {
@@ -56,7 +54,6 @@ function md5(data) {
 
 /* Add handler for sockets.io-connections */
 io.sockets.on("connection", function (socket) {
-    clients.push(socket);
     var files_with_hash = [];
     for(var i=0; i < files.length; i++) {
 	files_with_hash.push({name: files[i], hash: md5(files[i])});
@@ -77,11 +74,9 @@ function delfromclients(filename) {
 
 /* Send event to client */
 function update_clients(action, filename) {
-    for(var i=0; i < clients.length; i++) {
-	clients[i].emit(action, { name: filename,
-				  hash: md5(filename)
-				});
-    }
+    io.sockets.emit(action, { name: filename,
+			      hash: md5(filename)
+			    });
 }
 
 /* Target handler for rereader() */
