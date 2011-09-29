@@ -1,0 +1,16 @@
+About
+-----
+Synchronizes content of a directory with webclients using socket.io.
+
+How it works
+------------
+1) Clients connects to server, which sends current filelist.
+2) Server watches a directory for changes.
+3) On changes (file is added or removed), send notification to clients.
+
+Flaws/Todo
+----------
+Initial plan was to use inotify for watching directory, but turned out
+to be a hassle to learn; so did a polling fs.readdir(). This should be
+switched back to the inital plan.
+
