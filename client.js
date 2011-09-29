@@ -19,7 +19,7 @@ function log(text) {
     logs.innerHTML = "[" +date + "]: " + text + "\n" + logs.innerHTML;
 }
 
-var socket = io.connect("http://localhost:8080");
+var socket = io.connect();
 
 // Fetch the current filelist
 socket.on("filelist", function (data) {
